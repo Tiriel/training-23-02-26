@@ -1,5 +1,10 @@
 <?php
 
+namespace Acme\EventDispatcher;
+
+use Acme\EventDispatcher\Exception\NoListenerException;
+use Acme\EventDispatcher\Interface\EventListenerInterface;
+
 class EventDispatcher
 {
     private array $listeners = [];

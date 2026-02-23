@@ -1,6 +1,8 @@
 <?php
 
-class NoListenerException extends RuntimeException
+namespace Acme\EventDispatcher\Exception;
+
+class NoListenerException extends \RuntimeException
 {
     public function __construct(string $eventName = "")
     {

@@ -1,8 +1,15 @@
 <?php
 
-require_once __DIR__ . '/NoListenerException.php';
-require_once __DIR__ . '/EventDispatcher.php';
-require_once __DIR__ . '/EventListenerInterface.php';
+use Acme\EventDispatcher\EventDispatcher;
+use Acme\EventDispatcher\Exception\NoListenerException;
+use Acme\EventDispatcher\Interface\EventListenerInterface;
+
+spl_autoload_register(function ($class) {
+    $class = substr($class, strlen('Acme\\EventDispatcher\\'));
+    $class = strtr($class, '\\', '/');
+
+    require_once sprintf('%s/src/%s.php', __DIR__, $class);
+});
 
 class Listener implements EventListenerInterface
 {
@@ -18,7 +25,7 @@ $dispatcher->addListener('foo', new Listener());
 try {
     $dispatcher->dispatch(new class {
         public string $foo = 'Hello World';
-    }, 'bar');
+    }, 'foo');
 } catch (NoListenerException $e) {
     echo "Exception : " . $e->getMessage() . \PHP_EOL;
 }
