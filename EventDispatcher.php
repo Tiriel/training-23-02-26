@@ -13,6 +13,10 @@ class EventDispatcher
     {
         $eventName ??= $event::class;
 
+        if (!array_key_exists($eventName, $this->listeners)) {
+            throw new NoListenerException($eventName);
+        }
+
         $listeners = \array_unique($this->listeners[$eventName]);
         foreach ($listeners as $listener) {
             $listener instanceof EventListenerInterface

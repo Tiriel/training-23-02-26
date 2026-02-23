@@ -1,16 +1,24 @@
 <?php
 
+require_once __DIR__ . '/NoListenerException.php';
 require_once __DIR__ . '/EventDispatcher.php';
 require_once __DIR__ . '/EventListenerInterface.php';
 
-$dispatcher = new EventDispatcher();
-$dispatcher->addListener('foo', new class implements EventListenerInterface {
+class Listener implements EventListenerInterface
+{
     public function handle(object $event): void
     {
         echo 'Foo event called : ' . $event->foo . \PHP_EOL;
     }
-});
+}
 
-$dispatcher->dispatch(new class {
-    public string $foo = 'Hello World';
-}, 'foo');
+$dispatcher = new EventDispatcher();
+$dispatcher->addListener('foo', new Listener());
+
+try {
+    $dispatcher->dispatch(new class {
+        public string $foo = 'Hello World';
+    }, 'bar');
+} catch (NoListenerException $e) {
+    echo "Exception : " . $e->getMessage() . \PHP_EOL;
+}
