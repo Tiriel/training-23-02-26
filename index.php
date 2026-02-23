@@ -3,24 +3,27 @@
 use Acme\EventDispatcher\EventDispatcher;
 use Acme\EventDispatcher\Exception\NoListenerException;
 use Acme\EventDispatcher\Interface\EventListenerInterface;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 
-spl_autoload_register(function ($class) {
-    $class = substr($class, strlen('Acme\\EventDispatcher\\'));
-    $class = strtr($class, '\\', '/');
+require_once __DIR__ . '/vendor/autoload.php';
 
-    require_once sprintf('%s/src/%s.php', __DIR__, $class);
-});
+$twig = new Environment(
+    new FilesystemLoader(__DIR__.'/templates')
+);
 
 class Listener implements EventListenerInterface
 {
+    public function __construct(private readonly Environment $twig){}
+
     public function handle(object $event): void
     {
-        echo 'Foo event called : ' . $event->foo . \PHP_EOL;
+        echo $this->twig->render('index.html.twig', ['event' => $event->foo]);
     }
 }
 
 $dispatcher = new EventDispatcher();
-$dispatcher->addListener('foo', new Listener());
+$dispatcher->addListener('foo', new Listener($twig));
 
 try {
     $dispatcher->dispatch(new class {

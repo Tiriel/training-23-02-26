@@ -1,0 +1,19 @@
+{
+    "name": "acme/event-dispatcher",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Acme\\EventDispatcher\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Benjamin Zaslavsky",
+            "email": "benjamin.zaslavsky@gmail.com"
+        }
+    ],
+    "require": {
+        "twig/twig": "^3.23"
+    }
+}
