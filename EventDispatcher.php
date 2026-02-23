@@ -4,7 +4,7 @@ class EventDispatcher
 {
     private array $listeners = [];
 
-    public function addListener(string $eventName, callable $listener): void
+    public function addListener(string $eventName, callable|EventListenerInterface $listener): void
     {
         $this->listeners[$eventName][] = $listener;
     }
@@ -15,7 +15,9 @@ class EventDispatcher
 
         $listeners = \array_unique($this->listeners[$eventName]);
         foreach ($listeners as $listener) {
-            $listener($event);
+            $listener instanceof EventListenerInterface
+                ? $listener->handle($event)
+                : $listener($event);
         }
 
         return $event;
