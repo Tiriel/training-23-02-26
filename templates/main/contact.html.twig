@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Contact' %}
+
+{% block importmap %}
+    {{ parent() }}
+    {{ importmap('contact') }}
+{% endblock %}
+
+{% block body %}
+<h1>Contact</h1>
+    <div>
+        <img src="{{ asset('images/31116_JssY.jpeg') }}">
+    </div>
+{% endblock body %}
