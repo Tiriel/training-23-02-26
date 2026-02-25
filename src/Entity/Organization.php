@@ -31,9 +31,16 @@ class Organization
     #[ORM\ManyToMany(targetEntity: Conference::class, inversedBy: 'organizations')]
     private Collection $conferences;
 
+    /**
+     * @var Collection<int, User>
+     */
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'organizations')]
+    private Collection $users;
+
     public function __construct()
     {
         $this->conferences = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -97,6 +104,33 @@ class Organization
     public function removeConference(Conference $conference): static
     {
         $this->conferences->removeElement($conference);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): static
+    {
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
+            $user->addOrganization($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): static
+    {
+        if ($this->users->removeElement($user)) {
+            $user->removeOrganization($this);
+        }
 
         return $this;
     }

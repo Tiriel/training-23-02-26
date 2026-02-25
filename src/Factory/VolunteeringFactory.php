@@ -31,10 +31,13 @@ final class VolunteeringFactory extends PersistentProxyObjectFactory
      */
     protected function defaults(): array|callable
     {
+        $conf = ConferenceFactory::random();
+
         return [
-            'conference' => ConferenceFactory::new(),
-            'endAt' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
-            'startAt' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
+            'conference' => $conf,
+            'startAt' => $conf->getStartAt(),
+            'endAt' => $conf->getEndAt(),
+            'forUser' => UserFactory::random(),
         ];
     }
 

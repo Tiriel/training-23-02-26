@@ -23,6 +23,10 @@ class Volunteering
     #[ORM\JoinColumn(nullable: false)]
     private ?Conference $conference = null;
 
+    #[ORM\ManyToOne(inversedBy: 'volunteerings')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $forUser = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -60,6 +64,18 @@ class Volunteering
     public function setConference(?Conference $conference): static
     {
         $this->conference = $conference;
+
+        return $this;
+    }
+
+    public function getForUser(): ?User
+    {
+        return $this->forUser;
+    }
+
+    public function setForUser(?User $forUser): static
+    {
+        $this->forUser = $forUser;
 
         return $this;
     }
