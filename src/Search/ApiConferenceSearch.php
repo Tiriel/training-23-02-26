@@ -2,17 +2,25 @@
 
 namespace App\Search;
 
-use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\DependencyInjection\Attribute\AsAlias;
+use Symfony\Component\DependencyInjection\Attribute\Target;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
+#[AsAlias]
 class ApiConferenceSearch implements ConferenceSearchInterface
 {
     public function __construct(
-        #[Autowire(env: 'CONFERENCES_API_KEY')]
-        private readonly string $apiKey,
+        #[Target('conf.client')]
+        private readonly HttpClientInterface $client,
     ) {}
 
     public function searchByName(?string $name = null): array
     {
-        // TODO: Implement searchByName() method.
+        return $this->client->request(
+            Request::METHOD_GET,
+            '/events',
+            ['query' => ['name' => $name],]
+        )->toArray();
     }
 }
