@@ -4,22 +4,23 @@ namespace App\Controller;
 
 use App\Entity\Conference;
 use App\Form\ConferenceType;
-use App\Repository\ConferenceRepository;
+use App\Search\DatabaseConferenceSearch;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Routing\Requirement\Requirement;
 
 #[Route('/conference')]
 class ConferenceController extends AbstractController
 {
     #[Route('', name: 'app_conference_list', methods: ['GET'])]
-    public function list(ConferenceRepository $repository): Response
+    public function list(Request $request, DatabaseConferenceSearch $search): Response
     {
+        $name = $request->query->get('name');
+
         return $this->render('conference/list.html.twig', [
-            'conferences' => $repository->findAll(),
+            'conferences' => $search->searchByName($name),
         ]);
     }
 
