@@ -3,8 +3,10 @@
 namespace App\Search;
 
 use App\Repository\ConferenceRepository;
+use Symfony\Component\DependencyInjection\Attribute\AsAlias;
 
-class DatabaseConferenceSearch
+#[AsAlias]
+class DatabaseConferenceSearch implements ConferenceSearchInterface
 {
     public function __construct(
         private readonly ConferenceRepository $repository,
