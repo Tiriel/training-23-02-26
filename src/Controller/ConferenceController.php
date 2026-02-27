@@ -31,7 +31,7 @@ class ConferenceController extends AbstractController
     }
 
     #[Route('/conference/search', name: 'app_conference_search', methods: ['GET'])]
-    #[Template('conference/search.html.twig')]
+    #[Template('conference/list.html.twig')]
     public function search(Request $request, ConferenceSearchInterface $search): array
     {
         return ['conferences' => $search->searchByName($request->query->get('name'))];
