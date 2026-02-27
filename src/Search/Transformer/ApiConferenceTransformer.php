@@ -8,7 +8,7 @@ use App\Search\Interface\EntityTransformerInterface;
 
 class ApiConferenceTransformer implements EntityTransformerInterface
 {
-    public function transform(array $data): object
+    public function transform(array $data): Conference
     {
         return (new Conference())
             ->setName($data['name'])
