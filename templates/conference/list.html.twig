@@ -53,6 +53,13 @@
                         <div> There are no conferences yet...</div>
                     {% endfor %}
                 </div>
+                {% if app.request.query.get('name') is not null %}
+                    <div class="row row-cols-1 g-4 mb-5">
+                        <a href="{{ path('app_conference_list') }}">
+                            <button class="btn btn-sm" style="border: 1px solid limegreen; color: limegreen;" type="button">Empty Search</button>
+                        </a>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>
