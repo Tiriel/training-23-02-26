@@ -49,13 +49,14 @@ class ConferenceController extends AbstractController
 
     #[IsGranted(new Expression('is_granted("ROLE_ORGANIZER") or is_granted("ROLE_WEBSITE")'))]
     #[Route('/new', name: 'app_conference_new', methods: ['GET', 'POST'])]
-    public function newConference(Request $request, EntityManagerInterface $manager): Response
+    #[Route('/{id}/edit', name: 'app_conference_edit', methods: ['GET', 'POST'])]
+    public function newConference(?Conference $conference, Request $request, EntityManagerInterface $manager): Response
     {
         //if (!$this->isGranted('ROLE_ORGANIZER') && !$this->isGranted('ROLE_WEBSITE')) {
         //    throw $this->createAccessDeniedException('Only Organizers or Website users are allowed here.');
         //}
 
-        $conference = new Conference();
+        $conference ??= new Conference();
         $form = $this->createForm(ConferenceType::class, $conference);
 
         $form->handleRequest($request);

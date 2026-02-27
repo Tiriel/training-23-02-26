@@ -26,3 +26,8 @@ services:
 #    App\Search\DatabaseConferenceSearch:
 #        arguments:
 #            $repository: '@App\Repository\ConferenceRepository'
+
+    App\Security\Voter\SuperAdminVoter:
+        autoconfigure: false
+        tags:
+            - { name: security.voter, priority: 300 }

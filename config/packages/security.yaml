@@ -11,12 +11,13 @@ security:
                 class: App\Entity\User
                 property: email
 
-    role_hierarchy:
-        ROLE_USER: ~
-        ROLE_WEBSITE: ROLE_USER
-        ROLE_VOLUNTEER: ROLE_USER
-        ROLE_ORGANIZER: ROLE_VOLUNTEER
-        ROLE_ADMIN: [ROLE_WEBSITE, ROLE_ORGANIZER]
+#    role_hierarchy:
+#        ROLE_USER: ~
+#        ROLE_WEBSITE: ROLE_USER
+#        ROLE_VOLUNTEER: ROLE_USER
+#        ROLE_ORGANIZER: ROLE_VOLUNTEER
+#        ROLE_ADMIN: [ROLE_WEBSITE, ROLE_ORGANIZER]
+#        ROLE_SUPER_ADMIN: ROLE_ADMIN
 
     firewalls:
         dev:
