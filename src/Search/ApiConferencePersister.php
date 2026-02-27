@@ -9,6 +9,7 @@ use App\Repository\OrganizationRepository;
 use App\Search\Transformer\ApiConferenceTransformer;
 use App\Search\Transformer\ApiOrganizationTransformer;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class ApiConferencePersister
 {
@@ -18,6 +19,7 @@ class ApiConferencePersister
         private readonly OrganizationRepository $organizationRepository,
         private readonly ApiConferenceTransformer $conferenceTransformer,
         private readonly ApiOrganizationTransformer $organizationTransformer,
+        private readonly AuthorizationCheckerInterface $checker,
     ) {}
 
     public function parseApiResults(array $apiConfs): array
@@ -28,7 +30,9 @@ class ApiConferencePersister
             $conferences[] = $this->persistConference($apiConf);
         }
 
-        $this->manager->flush();
+        if ($this->checker->isGranted('ROLE_ORGANIZER') || $this->checker->isGranted('ROLE_WEBSITE')) {
+            $this->manager->flush();
+        }
 
         return $conferences;
     }

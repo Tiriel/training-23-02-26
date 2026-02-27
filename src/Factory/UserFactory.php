@@ -47,7 +47,7 @@ final class UserFactory extends PersistentProxyObjectFactory
 
     public function roles(array $roles): static
     {
-        return $this->with(['roles' => ['ROLE_USER'] + $roles]);
+        return $this->with(['roles' => $roles]);
     }
 
     public function password(string $paasword): static

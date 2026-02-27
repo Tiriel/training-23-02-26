@@ -11,6 +11,13 @@ security:
                 class: App\Entity\User
                 property: email
 
+    role_hierarchy:
+        ROLE_USER: ~
+        ROLE_WEBSITE: ROLE_USER
+        ROLE_VOLUNTEER: ROLE_USER
+        ROLE_ORGANIZER: ROLE_VOLUNTEER
+        ROLE_ADMIN: [ROLE_WEBSITE, ROLE_ORGANIZER]
+
     firewalls:
         dev:
             # Ensure dev tools and static assets are always allowed
@@ -37,7 +44,7 @@ security:
     # Note: Only the *first* matching rule is applied
     access_control:
         - { path: ^/conference, roles: IS_AUTHENTICATED }
-        # - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
 
 when@test:
