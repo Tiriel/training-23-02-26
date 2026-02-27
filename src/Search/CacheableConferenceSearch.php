@@ -2,6 +2,7 @@
 
 namespace App\Search;
 
+use App\Search\Interface\ConferenceSearchInterface;
 use Symfony\Component\DependencyInjection\Attribute\AsDecorator;
 use Symfony\Component\DependencyInjection\Attribute\When;
 use Symfony\Component\String\Slugger\SluggerInterface;

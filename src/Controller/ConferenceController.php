@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Conference;
 use App\Form\ConferenceType;
-use App\Search\ConferenceSearchInterface;
+use App\Search\Interface\ConferenceSearchInterface;
 use App\Search\DatabaseConferenceSearch;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Attribute\Template;

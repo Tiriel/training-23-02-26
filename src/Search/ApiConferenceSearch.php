@@ -2,6 +2,7 @@
 
 namespace App\Search;
 
+use App\Search\Interface\ConferenceSearchInterface;
 use Symfony\Component\DependencyInjection\Attribute\AsAlias;
 use Symfony\Component\DependencyInjection\Attribute\Target;
 use Symfony\Component\HttpFoundation\Request;

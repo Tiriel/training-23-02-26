@@ -2,7 +2,7 @@
 
 namespace App\Search;
 
-use App\Search\ConferenceSearchInterface;
+use App\Search\Interface\ConferenceSearchInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\AsDecorator;
 use Symfony\Component\DependencyInjection\Attribute\When;

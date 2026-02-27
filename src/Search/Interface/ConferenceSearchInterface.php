@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Search;
+namespace App\Search\Interface;
 
 interface ConferenceSearchInterface
 {
