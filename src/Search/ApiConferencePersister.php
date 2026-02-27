@@ -4,11 +4,13 @@ namespace App\Search;
 
 use App\Entity\Conference;
 use App\Entity\Organization;
+use App\Entity\User;
 use App\Repository\ConferenceRepository;
 use App\Repository\OrganizationRepository;
 use App\Search\Transformer\ApiConferenceTransformer;
 use App\Search\Transformer\ApiOrganizationTransformer;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class ApiConferencePersister
@@ -20,6 +22,7 @@ class ApiConferencePersister
         private readonly ApiConferenceTransformer $conferenceTransformer,
         private readonly ApiOrganizationTransformer $organizationTransformer,
         private readonly AuthorizationCheckerInterface $checker,
+        private readonly TokenStorageInterface $tokenStorage,
     ) {}
 
     public function parseApiResults(array $apiConfs): array
@@ -44,6 +47,12 @@ class ApiConferencePersister
         if (null === $conference) {
             $conference = $this->conferenceTransformer->transform($apiConf);
             $this->manager->persist($conference);
+        }
+
+        $user = $this->tokenStorage->getToken()->getUser();
+
+        if ($user instanceof User) {
+            $conference->setCreatedBy($user);
         }
 
         foreach ($this->parseOrganizations($apiConf['organizations']) as $organization) {

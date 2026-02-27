@@ -37,6 +37,7 @@ final class ConferenceFactory extends PersistentProxyObjectFactory
             'accessible' => self::faker()->boolean(),
             'startAt' => \DateTimeImmutable::createFromMutable(self::faker()->dateTimeBetween('-10 years', '+5 year')),
             'organizations' => OrganizationFactory::randomRangeOrCreate(1, 3),
+            'createdBy' => UserFactory::random(),
         ];
     }
 

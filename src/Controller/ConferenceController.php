@@ -6,6 +6,7 @@ use App\Entity\Conference;
 use App\Form\ConferenceType;
 use App\Search\Interface\ConferenceSearchInterface;
 use App\Search\DatabaseConferenceSearch;
+use App\Security\Attributes;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -56,11 +57,18 @@ class ConferenceController extends AbstractController
         //    throw $this->createAccessDeniedException('Only Organizers or Website users are allowed here.');
         //}
 
+        if ($conference instanceof Conference) {
+            $this->denyAccessUnlessGranted(Attributes::CONFERENCE_EDIT, $conference);
+        }
+
         $conference ??= new Conference();
         $form = $this->createForm(ConferenceType::class, $conference);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            if (null === $conference->getId()) {
+                $conference->setCreatedBy($this->getUser());
+            }
             $manager->persist($conference);
             $manager->flush();
 
