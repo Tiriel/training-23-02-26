@@ -3,6 +3,7 @@
 namespace App\Search;
 
 use App\Repository\ConferenceRepository;
+use App\Search\Interface\ConferenceSearchInterface;
 use Symfony\Component\DependencyInjection\Attribute\AsAlias;
 
 class DatabaseConferenceSearch implements ConferenceSearchInterface

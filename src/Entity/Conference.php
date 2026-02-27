@@ -56,7 +56,7 @@ class Conference
      */
     #[Assert\NotBlank]
     #[Assert\Valid]
-    #[ORM\ManyToMany(targetEntity: Organization::class, mappedBy: 'conferences')]
+    #[ORM\ManyToMany(targetEntity: Organization::class, mappedBy: 'conferences', cascade: ['persist'])]
     private Collection $organizations;
 
     public function __construct()
